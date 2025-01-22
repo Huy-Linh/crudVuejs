@@ -4,6 +4,9 @@
 
 <template>
 sfkhskjfskjgkdtuiertureytilyryuiri
+  <div>
+    Tuấn ngu
+  </div>
 </template>
 
 <style scoped>
