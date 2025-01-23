@@ -21,18 +21,19 @@
               prepend-icon="mdi-view-dashboard"
               title="Home"
               value="home"
+              href="#/helloworld"
             ></v-list-item>
             <v-list-item
               prepend-icon="mdi-forum"
-              title="About"
-              value="about"
+              title="Crud"
+              value="crud"
+              href="#/"
             ></v-list-item>
           </v-list>
         </v-navigation-drawer>
         <v-main>
-          <Test2></Test2>
+          <component :is="currentView"/>
         </v-main>
-        <AppFooter/>
       </v-layout>
     </v-app>
   </div>
@@ -40,17 +41,24 @@
 </template>
 <script setup>
   import Test2 from './components/Test2.vue'
+  import HelloWorld from './components/HelloWorld.vue'
   import AppFooter from "@/components/AppFooter.vue";
-  import  { ref } from "vue";
+  import  { ref, computed } from "vue";
   const drawer = ref(false)
-  const tabName = ref('Test2');
+  const routes = {
+    '/': Test2,
+    '/helloworld': HelloWorld,
+  }
+  const currentPath = ref(window.location.hash)
+  window.addEventListener("hashchange", () => {
+    currentPath.value = window.location.hash
+  })
+  const currentView = computed(() => {
+    return routes[currentPath.value.slice(1) || '/'] || NotFound
+  })
 
 </script>
 <style scoped>
-*{
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+
 
 </style>
