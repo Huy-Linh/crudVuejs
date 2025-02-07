@@ -8,28 +8,27 @@ const list = ref([
     birthDay: '25-02-2003',
     phone: '0944141310',
   },
-]);
+])
+
 const employee = ref({
   employeeID: '',
   firstName: '',
   lastName: '',
   birthDay: '',
-  phone: '',
-});
+  phone: ''
+})
 const empEdit = ref({
   employeeID: '',
   firstName: '',
   lastName: '',
   birthDay: '',
   phone: '',
-});
+})
 const titleForm = ref('Thêm nhân viên');
 const check =  ref({
   isShowForm: false,
   isEditButton: false,
 })
-const itemsPerPage = 5;
-
 function add() {
   employee.value.employeeID = Math.floor(Math.random() * 1000).toString();
   let ischeckID = list.value.some((e) => e.employeeID === employee.value.employeeID);
@@ -102,7 +101,7 @@ watch(empEdit.value, (newVal) => {
     </div>
     <div>
       <v-table
-        :style="{width: 'fit-content', border: '1px solid #ccc'}" class="mx-auto">
+        :style="{width: '980px', border: '1px solid #ccc'}" class="mx-auto">
         <thead>
         <tr>
           <th class="text-center">ID</th>
@@ -122,14 +121,14 @@ watch(empEdit.value, (newVal) => {
           <td class="text-center">{{employee.phone}}</td>
           <td class="button text-center">
             <v-btn @click="editButton(employee)"
-                   variant="fat"
+                   variant="flat"
                    class="ma-0"
                    min-width="1px"
             >
               <v-icon icon="mdi-pencil-box"></v-icon>
             </v-btn>
             <v-btn @click="deleteEmp(employee)"
-                   variant="fat"
+                   variant="flat"
                    class="ma-0"
                    min-width="1px">
               <v-icon icon="mdi-delete"></v-icon>
@@ -146,16 +145,15 @@ watch(empEdit.value, (newVal) => {
             <v-col cols="12" xl="6" md="6" sm="6" class="align-center">
               <v-text-field
                 v-model="employee.firstName"
-                :counter="50"
+                :counter="30"
                 placeholder = "Nhập họ và tên đệm"
                 required
               ></v-text-field>
             </v-col>
             <v-col cols="12" xl="6" md="6" sm="6">
               <v-text-field
-
                 v-model="employee.lastName"
-                :counter="50"
+                :counter="10"
                 placeholder = "Nhập tên"
                 required
               ></v-text-field>
@@ -171,7 +169,7 @@ watch(empEdit.value, (newVal) => {
             <v-col cols="12" xl="6" md="6" sm="6" class="pt-0">
               <v-text-field
                 v-model="employee.phone"
-                :counter="50"
+                :counter="10"
                 placeholder = "Nhập số điện thoại"
                 required
               ></v-text-field>
@@ -194,7 +192,6 @@ watch(empEdit.value, (newVal) => {
     </div>
   </v-container>
 </template>
-
 <style scoped>
 @media (min-width: 1280px) {
   .v-container {
@@ -203,5 +200,8 @@ watch(empEdit.value, (newVal) => {
 }
 th, td{
   width: 150px;
+}
+tbody>tr:hover {
+  background-color: aqua;
 }
 </style>
