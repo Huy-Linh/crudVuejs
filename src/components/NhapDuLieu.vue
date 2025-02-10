@@ -1,97 +1,77 @@
 <script setup>
-import {ref, defineEmits, watch,defineProps} from 'vue'
+import {ref, watch} from 'vue'
 const saveEmit = defineEmits()
-const productEdit = defineProps({
+const props = defineProps({
   productEdit:{
     type: Object,
-    required: true,
+    default: null
   }
 })
 const product = ref({
-  id: null,
+  id: Math.floor(Math.random() * 1000).toString(),
   productName:'',
   os:'',
   cpu:'',
   ram:'',
   storage:'',
-  price:null,
+  price:'',
 })
+const osList = ref(['Android','iOS'])
 const reset =() =>{
-  product.value.id = null
+  product.value.id = ''
   product.value.productName = ''
   product.value.os = ''
   product.value.cpu = ''
   product.value.ram = ''
   product.value.storage = ''
-  product.value.price = null
+  product.value.price = ''
 }
 const saveButton = () =>{
-  product.value.id = Math.floor(Math.random() * 1000).toString();
   saveEmit('save',{...product.value})
   reset()
 }
-watch(productEdit.productEdit, (newVal) => {
+watch(props.productEdit, (newVal) => {
+  console.log('new val :',newVal)
   if (newVal) {
-    Object.assign(product.value, newVal);
-  } else {
-    reset();
+    Object.assign(product.value, newVal)
   }
 });
+
 </script>
 <template>
-<form @submit.prevent="">
-  <label>
-    Tên sản phẩm:
-    <input type="text" v-model="product.productName" />
-  </label>
-  <label>
-    Hệ điều hành:
-    <select v-model="product.os">
-      <option disabled>Chọn hệ điều hành</option>
-      <option value="Android">Android</option>
-      <option value="iOS">iOS</option>
-    </select>
-  </label>
-  <label>
-    CPU:
-    <input type="text" v-model="product.cpu">
-  </label>
-  <label>
-    Ram:
-    <input type="text" v-model="product.ram">
-  </label>
-  <label>
-    Dung lượng:
-    <input type="text" v-model="product.storage">
-  </label>
-  <label>
-    Giá:
-    <input type="text" v-model="product.price">
-  </label>
-  <button @click="saveButton">Lưu</button>
-  <button>Hủy</button>
-</form>
-  {{productEdit}}
+  {{props.productEdit}}
+<v-form @submit.prevent="" @keyup.enter="saveButton">
+  <v-text-field
+  v-model="product.productName"
+  label="Tên sản phẩm">
+  </v-text-field>
+  <v-select
+    v-model="product.os"
+    label="Hệ điều hành"
+    :items="osList">
+  </v-select>
+  <v-text-field
+    v-model="product.cpu"
+    label="CPU">
+  </v-text-field>
+ <v-text-field
+   v-model="product.ram"
+   label="RAM">
+ </v-text-field>
+  <v-text-field
+    v-model="product.storage"
+    label="Dung lượng">
+  </v-text-field>
+  <v-text-field
+    v-model="product.price"
+    label="Giá"
+  >
+  </v-text-field>
+  <v-btn @click="saveButton">Lưu</v-btn>
+</v-form>
+
 </template>
 
 <style scoped>
-input, select {
-  outline: none;
-  width: 200px;
-  border: 1px solid #ccc;
-  background: none;
-  color: rgb(162, 162, 162);
-}
-form{
-  margin: 5px;
-  display: flex;
-  flex-direction: column;
-}
-label{
-  padding: 3px;
-}
-button{
-  border: 1px solid #ccc;
-  width: 100px;
-}
+
 </style>
